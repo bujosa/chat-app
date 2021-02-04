@@ -1,14 +1,10 @@
 const { Router } = require("express");
+const createUser = require("../controllers/auth");
 
 const router = Router();
 
 // create new user
-router.post("/new", (req, res) => {
-  res.json({
-    ok: true,
-    user: "ABC",
-  });
-});
+router.post("/new", createUser);
 
 // Login
 router.post("/", (req, res) => {
@@ -27,3 +23,7 @@ router.get("/renew", (req, res) => {
 });
 
 module.exports = router;
+
+/* 
+path: api/login
+*/
