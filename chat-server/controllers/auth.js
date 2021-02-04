@@ -42,24 +42,24 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const userDB = await User.findOne({ email });
-    if (!userDB) {
+    const user = await User.findOne({ email });
+    if (!user) {
       return res.status(404).json({
         ok: false,
         msg: "Email or password not match",
       });
     }
 
-    const validPassword = bcrypt.compareSync(password, userDB.password);
+    const validPassword = bcrypt.compareSync(password, user.password);
     if (!validPassword) {
       return res.status(400).json({
         ok: false,
         msg: "Email or password not match",
       });
     }
-    const token = await createJWt(userDB.id);
+    const token = await createJWt(user.id);
     res.json({
-      userDB,
+      user,
       token,
     });
   } catch (error) {
@@ -71,10 +71,27 @@ const login = async (req, res) => {
 };
 
 const renewToken = async (req, res) => {
-  res.json({
-    ok: true,
-    msg: "renew",
-  });
+  try {
+    const uid = req.uid;
+    const token = await createJWt(uid);
+    const user = await User.findById(uid);
+    if (!user) {
+      return res.status(404).json({
+        ok: false,
+        msg: "User not Found",
+      });
+    }
+    res.json({
+      ok: true,
+      user,
+      token,
+    });
+  } catch (e) {
+    res.status(500).json({
+      ok: false,
+      msg: "Contact the administrator",
+    });
+  }
 };
 
 module.exports = { createUser, login, renewToken };
