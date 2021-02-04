@@ -6,7 +6,16 @@ const { validateFields } = require("../middlewares/validate-fields");
 const router = Router();
 
 // create new user
-router.post("/new", createUser);
+router.post(
+  "/new",
+  [
+    check("name", "Name is required").not().isEmpty(),
+    check("email", "Email is required").isEmail(),
+    check("password", "Password is required").not().isEmpty(),
+    validateFields,
+  ],
+  createUser
+);
 
 // Login
 router.post(
