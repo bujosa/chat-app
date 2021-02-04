@@ -2,7 +2,8 @@ import React from "react";
 
 export const ChatList = () => {
   return (
-    <div className="chat_list active_chat">
+    <div className="chat_list">
+      {/*active_chat*/}
       <div className="chat_people">
         <div className="chat_img">
           <img
