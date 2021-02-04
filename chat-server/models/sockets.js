@@ -7,7 +7,13 @@ class Sockets {
   socketEvents() {
     // On connection
     this.io.on("connection", (socket) => {
-      console.log("Cliente conectado");
+      // Validate JSON web Token
+      // User active
+      // user online
+      // Socket Join, uid
+      // Listen messages client
+      // Disconect
+      // Emit all user online
     });
   }
 }
