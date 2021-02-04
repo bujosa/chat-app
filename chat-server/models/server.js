@@ -29,6 +29,9 @@ class Server {
 
     this.app.use(cors());
 
+    this.app.use("/api/login", require("../router/auth"));
+
+    // Endpoints
     this.app.get("/last", (req, res) => {
       res.json({
         last: this.sockets.ticketList.lastThirteen,
