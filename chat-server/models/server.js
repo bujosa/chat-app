@@ -26,22 +26,13 @@ class Server {
 
   middlewares() {
     this.app.use(express.static(path.resolve(__dirname, "../public")));
-
     this.app.use(cors());
-
+    this.app.use(express.json());
     this.app.use("/api/login", require("../router/auth"));
-
-    // Endpoints
-    this.app.get("/last", (req, res) => {
-      res.json({
-        last: this.sockets.ticketList.lastThirteen,
-      });
-    });
   }
 
   execute() {
     this.middlewares();
-
     this.server.listen(this.port, () => {
       console.log("Server corriendo en puerto:", this.port);
     });

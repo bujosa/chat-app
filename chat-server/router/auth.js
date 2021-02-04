@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { check } = require("express-validator");
 const { createUser, renewToken, login } = require("../controllers/auth");
 
 const router = Router();
@@ -7,7 +8,14 @@ const router = Router();
 router.post("/new", createUser);
 
 // Login
-router.post("/", login);
+router.post(
+  "/",
+  [
+    check("email", "Email is required").isEmail(),
+    check("password", "Password is required").not().isEmpty(),
+  ],
+  login
+);
 
 // Token re-validation
 router.get("/renew", renewToken);
