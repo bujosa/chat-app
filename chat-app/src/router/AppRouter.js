@@ -14,7 +14,7 @@ export const AppRouter = () => {
       <div>
         <Switch>
           <Route path="/auth" component={AuthRouter} />
-          <Route path="/" component={ChatPage} />
+          <Route exact path="/" component={ChatPage} />
           <Redirect to="/"></Redirect>
         </Switch>
       </div>
