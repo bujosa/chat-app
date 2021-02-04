@@ -6,10 +6,16 @@ import "../css/login-register.css";
 
 export const AuthRouter = () => {
   return (
-    <Switch>
-      <Route exact path="/auth/login" component={LoginPage}></Route>
-      <Route exact path="/auth/register" component={RegisterPage}></Route>
-      <Redirect to="/auth/login>" />
-    </Switch>
+    <div className="limiter">
+      <div className="container-login100">
+        <div className="wrap-login100 p-t-50 p-b-90">
+          <Switch>
+            <Route exact path="/auth/login" component={LoginPage}></Route>
+            <Route exact path="/auth/register" component={RegisterPage}></Route>
+            <Redirect to="/auth/login>" />
+          </Switch>
+        </div>
+      </div>
+    </div>
   );
 };
