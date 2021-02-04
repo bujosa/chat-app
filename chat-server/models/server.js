@@ -17,9 +17,7 @@ class Server {
 
     this.server = http.createServer(this.app);
 
-    this.io = socketio(this.server, {
-      /* Configurations */
-    });
+    this.io = socketio(this.server, {});
 
     this.sockets = new Sockets(this.io);
   }
@@ -33,9 +31,7 @@ class Server {
 
   execute() {
     this.middlewares();
-    this.server.listen(this.port, () => {
-      console.log("Server corriendo en puerto:", this.port);
-    });
+    this.server.listen(this.port, () => {});
   }
 }
 
