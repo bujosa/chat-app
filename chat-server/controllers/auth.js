@@ -40,12 +40,34 @@ const createUser = async (req, res = response) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-  res.json({
-    ok: true,
-    msg: "login",
-    email,
-    password,
-  });
+
+  try {
+    const userDB = await User.findOne({ email });
+    if (!userDB) {
+      return res.status(404).json({
+        ok: false,
+        msg: "Email or password not match",
+      });
+    }
+
+    const validPassword = bcrypt.compareSync(password, userDB.password);
+    if (!validPassword) {
+      return res.status(400).json({
+        ok: false,
+        msg: "Email or password not match",
+      });
+    }
+    const token = await createJWt(userDB.id);
+    res.json({
+      userDB,
+      token,
+    });
+  } catch (error) {
+    res.status(500).json({
+      ok: false,
+      msg: "Contact the administrator",
+    });
+  }
 };
 
 const renewToken = async (req, res) => {
