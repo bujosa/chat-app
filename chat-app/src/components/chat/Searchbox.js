@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Searchbox = () => {
+export const SearchBox = () => {
   return (
     <div className="headind_srch">
       <div className="recent_heading mt-2">
