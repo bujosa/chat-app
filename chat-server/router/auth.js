@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const createUser = require("../controllers/auth");
+const { createUser, renewToken, login } = require("../controllers/auth");
 
 const router = Router();
 
@@ -7,20 +7,10 @@ const router = Router();
 router.post("/new", createUser);
 
 // Login
-router.post("/", (req, res) => {
-  res.json({
-    ok: true,
-    msg: "login",
-  });
-});
+router.post("/", login);
 
 // Token re-validation
-router.get("/renew", (req, res) => {
-  res.json({
-    ok: true,
-    msg: "renew",
-  });
-});
+router.get("/renew", renewToken);
 
 module.exports = router;
 
