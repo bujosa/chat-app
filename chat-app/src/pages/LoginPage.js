@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../auth/AuthContext";
+import Sweet from "sweetalert2";
 
 export const LoginPage = () => {
   const { login } = useContext(AuthContext);
@@ -36,14 +37,21 @@ export const LoginPage = () => {
     });
   };
 
-  const onSubmit = (ev) => {
+  const onSubmit = async (ev) => {
     ev.preventDefault();
     form.rememberme
       ? localStorage.setItem("email", form.email)
       : localStorage.removeItem("email");
 
     const { email, password } = form;
-    login(email, password);
+    const res = await login(email, password);
+    if (!res) {
+      Sweet.fire("Error", "Verify username and password", "error");
+    }
+  };
+
+  const allSet = () => {
+    return form.email.length > 0 && form.password.length > 0 ? true : false;
   };
 
   return (
@@ -97,7 +105,12 @@ export const LoginPage = () => {
       </div>
 
       <div className="container-login100-form-btn m-t-17">
-        <button className="login100-form-btn">Ingresar</button>
+        <button
+          className="login100-form-btn"
+          type="submit"
+          disabled={!allSet()}>
+          Ingresar
+        </button>
       </div>
     </form>
   );
