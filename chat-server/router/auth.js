@@ -8,7 +8,7 @@ const router = Router();
 
 // create new user
 router.post(
-  "/new",
+  "/register",
   [
     check("name", "Name is required").not().isEmpty(),
     check("email", "Email is required").isEmail(),

@@ -27,6 +27,7 @@ const createUser = async (req, res = response) => {
     const token = await createJWt(user.id);
 
     res.json({
+      ok: true,
       user,
       token,
     });
@@ -59,6 +60,7 @@ const login = async (req, res) => {
     }
     const token = await createJWt(user.id);
     res.json({
+      ok: true,
       user,
       token,
     });

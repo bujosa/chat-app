@@ -27,10 +27,28 @@ export const AuthProvider = ({ children }) => {
         email: user.email,
       });
     }
-    return resp.ok;
+    return resp.msg;
   };
 
-  const register = (email, name, password) => {};
+  const register = async (email, name, password) => {
+    const resp = await fetchNoToken(
+      "login/register",
+      { email, name, password },
+      "POST"
+    );
+    if (resp.ok) {
+      localStorage.setItem("token", resp.token);
+      const { user } = resp;
+      setAuth({
+        uid: user.uid,
+        checking: false,
+        logged: true,
+        name: user.name,
+        email: user.email,
+      });
+    }
+    return resp.msg;
+  };
 
   const tokenVerify = useCallback(() => {}, []);
 

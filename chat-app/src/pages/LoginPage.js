@@ -44,9 +44,9 @@ export const LoginPage = () => {
       : localStorage.removeItem("email");
 
     const { email, password } = form;
-    const res = await login(email, password);
-    if (!res) {
-      Sweet.fire("Error", "Verify username and password", "error");
+    const msg = await login(email, password);
+    if (msg !== true) {
+      Sweet.fire("Error", msg, "error");
     }
   };
 
