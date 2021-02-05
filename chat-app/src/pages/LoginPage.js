@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../auth/AuthContext";
 
 export const LoginPage = () => {
+  const { login } = useContext(AuthContext);
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -11,11 +13,11 @@ export const LoginPage = () => {
   useEffect(() => {
     const email = localStorage.getItem("email");
     if (email) {
-      setForm({
+      setForm((form) => ({
         ...form,
         email,
         rememberme: true,
-      });
+      }));
     }
   }, []);
 
@@ -41,6 +43,7 @@ export const LoginPage = () => {
       : localStorage.removeItem("email");
 
     const { email, password } = form;
+    login(email, password);
   };
 
   return (

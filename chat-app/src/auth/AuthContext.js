@@ -1,4 +1,5 @@
 import React, { useState, createContext, useCallback } from "react";
+import { fetchNoToken } from "../helpers/fetch";
 
 export const AuthContext = createContext();
 
@@ -13,7 +14,10 @@ const initialState = {
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(initialState);
 
-  const login = (email, password) => {};
+  const login = async (email, password) => {
+    const resp = await fetchNoToken("login", { email, password }, "POST");
+    console.log(resp);
+  };
 
   const register = (email, name, password) => {};
 
