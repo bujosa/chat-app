@@ -1,5 +1,5 @@
 import React, { useState, createContext, useCallback } from "react";
-import { fetchNoToken } from "../helpers/fetch";
+import { fetchNoToken, fetchWithToken } from "../helpers/fetch";
 
 export const AuthContext = createContext();
 
@@ -26,6 +26,7 @@ export const AuthProvider = ({ children }) => {
         name: user.name,
         email: user.email,
       });
+      return true;
     }
     return resp.msg;
   };
@@ -46,11 +47,43 @@ export const AuthProvider = ({ children }) => {
         name: user.name,
         email: user.email,
       });
+      return true;
     }
     return resp.msg;
   };
 
-  const tokenVerify = useCallback(() => {}, []);
+  const tokenVerify = useCallback(async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setAuth({
+        checking: false,
+        logged: false,
+      });
+
+      return false;
+    }
+
+    const resp = await fetchWithToken("login/renew");
+
+    if (resp.ok) {
+      localStorage.setItem("token", resp.token);
+      const { user } = resp;
+      setAuth({
+        uid: user.uid,
+        checking: false,
+        logged: true,
+        name: user.name,
+        email: user.email,
+      });
+      return true;
+    } else {
+      setAuth({
+        checking: false,
+        logged: false,
+      });
+      return false;
+    }
+  }, []);
 
   const logout = () => {};
 
