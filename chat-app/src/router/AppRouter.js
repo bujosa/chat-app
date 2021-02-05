@@ -8,6 +8,7 @@ import {
 import { AuthContext } from "../auth/AuthContext";
 import { ChatPage } from "../pages/ChatPage";
 import { AuthRouter } from "./AuthRouter";
+import { PublicRoute } from "./PublicRoute";
 
 export const AppRouter = () => {
   const { auth, tokenVerify } = useContext(AuthContext);
@@ -25,7 +26,11 @@ export const AppRouter = () => {
     <Router>
       <div>
         <Switch>
-          <Route path="/auth" component={AuthRouter} />
+          <PublicRoute
+            isAuthenticated={auth.logged}
+            path="/auth"
+            component={AuthRouter}
+          />
           <Route exact path="/" component={ChatPage} />
           <Redirect to="/"></Redirect>
         </Switch>
