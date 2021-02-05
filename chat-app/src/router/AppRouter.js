@@ -1,27 +1,22 @@
 import React, { useContext, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
 import { AuthContext } from "../auth/AuthContext";
 import { ChatPage } from "../pages/ChatPage";
 import { AuthRouter } from "./AuthRouter";
+import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
 
 export const AppRouter = () => {
   const { auth, tokenVerify } = useContext(AuthContext);
 
   useEffect(() => {
-    return () => {
-      tokenVerify();
-    };
+    tokenVerify();
   }, [tokenVerify]);
 
   if (auth.checking) {
     return <h1> Wait a Second</h1>;
   }
+
   return (
     <Router>
       <div>
@@ -31,8 +26,13 @@ export const AppRouter = () => {
             path="/auth"
             component={AuthRouter}
           />
-          <Route exact path="/" component={ChatPage} />
-          <Redirect to="/"></Redirect>
+          <PrivateRoute
+            isAuthenticated={auth.logged}
+            exact
+            path="/"
+            component={ChatPage}
+          />
+          <Redirect to="/" />
         </Switch>
       </div>
     </Router>

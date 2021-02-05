@@ -54,10 +54,14 @@ export const AuthProvider = ({ children }) => {
 
   const tokenVerify = useCallback(async () => {
     const token = localStorage.getItem("token");
+
     if (!token) {
       setAuth({
+        uid: null,
         checking: false,
         logged: false,
+        name: null,
+        email: null,
       });
 
       return false;
@@ -78,18 +82,27 @@ export const AuthProvider = ({ children }) => {
       return true;
     } else {
       setAuth({
+        uid: null,
         checking: false,
         logged: false,
+        name: null,
+        email: null,
       });
       return false;
     }
   }, []);
 
-  const logout = () => {};
+  const logout = () => {
+    localStorage.removeItem("token");
+    setAuth({
+      checking: false,
+      logged: false,
+    });
+  };
 
   return (
     <AuthContext.Provider
-      value={{ logout, login, tokenVerify, register, auth }}>
+      value={{ auth, logout, login, tokenVerify, register }}>
       {children}
     </AuthContext.Provider>
   );
