@@ -7,7 +7,7 @@ export const ChatList = () => {
       <div className="chat_people">
         <div className="chat_img">
           <img
-            src="https://ptetutorials.com/images/user-profile.png"
+            src="https://miro.medium.com/max/600/1*PiHoomzwh9Plr9_GA26JcA.png"
             alt="sunil"
           />
         </div>
