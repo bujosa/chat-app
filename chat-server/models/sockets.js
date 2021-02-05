@@ -7,6 +7,7 @@ class Sockets {
   socketEvents() {
     // On connection
     this.io.on("connection", (socket) => {
+      console.log("cliente conectado");
       // Validate JSON web Token
       // User active
       // user online
@@ -14,6 +15,9 @@ class Sockets {
       // Listen messages client
       // Disconect
       // Emit all user online
+      socket.on("disconect", () => {
+        console.log("cliente desconectado");
+      });
     });
   }
 }
