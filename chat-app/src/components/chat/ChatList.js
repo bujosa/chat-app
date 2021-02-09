@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ChatContext } from "../../context/chat/ChatContext";
+import { types } from "../../types/types";
 
 export const ChatList = ({ user }) => {
+  const { chatState, dispatch } = useContext(ChatContext);
+  const { activeChat } = chatState;
+
+  const onClick = () => {
+    dispatch({
+      type: types.activateChat,
+      payload: user.uid,
+    });
+  };
+
   return (
-    <div className="chat_list">
-      {/*active_chat*/}
+    <div
+      className={`chat_list ${user.uid === activeChat && "active_chat"}`}
+      onClick={onClick}>
       <div className="chat_people">
         <div className="chat_img">
           <img
