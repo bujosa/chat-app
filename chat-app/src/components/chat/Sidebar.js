@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ChatContext } from "../../context/chat/ChatContext";
 import { ChatList } from "./ChatList";
 
 export const SideBar = () => {
-  const chats = [1, 2, 3, 4];
+  const { chatState } = useContext(ChatContext);
+
   return (
     <div className="inbox_chat">
-      {chats.map((chat) => (
-        <ChatList key={chat} />
+      {chatState.users.map((user) => (
+        <ChatList key={user.uid} user={user} />
       ))}
 
       {/* <!-- Espacio extra para scroll --> */}
