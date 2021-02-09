@@ -1,4 +1,9 @@
-const { userOnline, userOffline, getUsers } = require("../controllers/sockets");
+const {
+  userOnline,
+  userOffline,
+  getUsers,
+  saveMessage,
+} = require("../controllers/sockets");
 const { validateJWT } = require("../helpers/jwt");
 
 class Sockets {
@@ -17,6 +22,10 @@ class Sockets {
       }
 
       await userOnline(uid);
+
+      // Join space
+      socket.join(uid);
+
       // Validate JSON web Token
 
       // User active
@@ -26,6 +35,11 @@ class Sockets {
 
       // Socket Join, uid
 
+      socket.on("private-message", async (payload) => {
+        const message = await saveMessage(payload);
+        this.io.to(message.from).emit("private-message", message);
+        this.io.to(message.to).emit("private-message", message);
+      });
       // Listen messages client
 
       // Disconect
