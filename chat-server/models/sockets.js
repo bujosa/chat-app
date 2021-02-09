@@ -1,4 +1,4 @@
-const { userOnline, userOffline } = require("../controllers/sockets");
+const { userOnline, userOffline, getUsers } = require("../controllers/sockets");
 const { validateJWT } = require("../helpers/jwt");
 
 class Sockets {
@@ -17,12 +17,12 @@ class Sockets {
       }
 
       await userOnline(uid);
-
       // Validate JSON web Token
 
       // User active
 
       // user online
+      this.io.emit("list-users", await getUsers());
 
       // Socket Join, uid
 
