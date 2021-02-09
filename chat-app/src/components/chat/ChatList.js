@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { ChatContext } from "../../context/chat/ChatContext";
 import { fetchWithToken } from "../../helpers/fetch";
+import { scrollToBottom } from "../../helpers/scrollToBottom";
 import { types } from "../../types/types";
 
 export const ChatList = ({ user }) => {
@@ -19,6 +20,8 @@ export const ChatList = ({ user }) => {
       type: types.loadChat,
       payload: resp.lastThirty,
     });
+
+    scrollToBottom("messages");
   };
 
   return (
